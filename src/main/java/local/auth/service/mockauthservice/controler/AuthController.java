@@ -63,7 +63,8 @@ public class AuthController {
         if(isActive){
             response = new ResponseSuccess(
                     path,
-                    new HashMap<String,Boolean>() {{put("active",user.isActive());}});
+                    user
+                   );
         }else{
 
             String message = (user != null) ?
@@ -91,8 +92,8 @@ public class AuthController {
 
         /* check if user already exists */
         if(userRepository.findUserByUserName(signupForm.getUserName()) == null){
-            User data = userRepository.save(signupFormToUser(signupForm));
-            response = new ResponseSuccess(path, data);
+            User user = userRepository.save(signupFormToUser(signupForm));
+            response = new ResponseSuccess(path, user);
         }else{
             response = new ResponseError(
                     HttpStatus.FORBIDDEN,
